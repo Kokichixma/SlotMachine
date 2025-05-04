@@ -47,7 +47,8 @@ python SlotMachine.py test
   
 - 1. Polimorfizmas
 Polymorphism is present in several places where objects of different classes can be used interchangeably:
-```
+
+```py
 class Game:
     def __init__(self, slot_machine):
         # Polymorphic - accepts any type of slot machine
@@ -61,9 +62,10 @@ class HighStakes_SlotMachine(Regular_SlotMachine):
             winnings += 50 * bet_multiplier
         return winnings
 ```
+
 - 2. Abstrakcija
 Abstraction is implemented through the base SlotMachine class and its methods:
-```
+```py
 class SlotMachine:
     def __init__(self, symbols):
         self._symbols = symbols
@@ -76,7 +78,8 @@ class SlotMachine:
 ```
 - 3. Paveldėjimas
 Inheritance is demonstrated through the class hierarchy:
-```
+
+```py
 class Regular_SlotMachine(SlotMachine):
     # Inherits from SlotMachine
     def __init__(self, initial_balance, symbols):
@@ -87,9 +90,11 @@ class HighStakes_SlotMachine(Regular_SlotMachine):
     def __init__(self, initial_balance, symbols):
         super().__init__(initial_balance, symbols)
 ```
+
 - 4. Inkapsuliacija
 Inkapsuliacija yra iterpta naudojant privačius kintamuosius (du apatiniai brūkšniai) ir apsaugotus metodus (vienas apatinis brūkšnys):
-```
+
+```py
 class Wheel:
     def __init__(self, symbols):
         self.__symbols = symbols        # Privatus kintamasis
@@ -105,6 +110,7 @@ class Regular_SlotMachine(SlotMachine):
         if win > 0:
             print(f"{first}\t{second}\t{third} -- YOU WIN \033[92m${win}\033[0m")
 ```
+
 # ////////////////////////////////////////////////////////////////////////////////////////////////////////////
 
 
