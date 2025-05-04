@@ -1,7 +1,55 @@
-# SlotMachine
-Course work
+# Lošimo automatas "SlotMachine"
 
-## 1. Polymorphism
+## Įvadas
+
+### a. Kokia tai programa?
+
+Tai yra konsolinis lošimo automato "Slot Machine" žaidimas. Žaidimo pradžioje žaidėjas pasirenka vieną iš dviejų automatų tipų – Regular arba High Stakes – tiesiog pažymėdamas nenorimą komentaru su simboliu `#`. Veikimo principas grindžiamas atsitiktinumo generavimu ir tam tikra struktūrizuota lošimo logika. Žaidėjui yra suteikta galimybė įvesti sumą iš kurios bus lošiama. Sukimo metu būgnai sustos ir bus rodomi atsitiktiniai simboliai. Nepaisant "Slot Machine" pasirinkimo bus 7 simboliai (CHERRY, ORANGE, PLUM, LEMON, BELL, BAR, SEVEN) kurių vertė kyla iš kairės į dešinę, išskyrus vienu atveju, nes PLUM lygus LEMON. Laimėjimai apskaičiuojami remiantis iš anksto numatytais algoritmais. Žaidimas gali būti tęsiamas iki tol kol yra patenkinamos žaidimo sąlygos t.y. netikrų skaitmeninių pinigų. P.s. Žaidimas neskatina lošimo, bandymai rodė, kad žaidėjas nebus linkęs laimėti.
+
+### b. Kaip paleisti ir naudoti programą?
+
+1. Pasirinkite automato tipą:
+   Regular Slot Machine (galima įvesties vertė nuo 1 iki 50).
+   High Stakes Slot Machine (galima įvesties vertė nuo 50 iki 500).
+   Tuomet nenorimą aparatą kodo apačioje (iki kol prasideda testavimo sekcija - `class TestWheel(unittest.TestCase):`) pažymėkite komentaru su simboliu `#`.
+   
+2. Įrašykite kodą į failą, pvz., `SlotMachine.py`.
+
+3. Terminale arba komandų eilutėje paleiskite šį scenarijų:
+```
+python SlotMachine.py
+```
+4. Vykdykite nurodymus:
+   Įveskite `y/n` priklausomai ar norite žaisti.
+   Įvedę `y` įrašykite sumą iš kurios bus lošiama.
+
+Norėdami paleisti unit testus:
+```
+python SlotMachine.py test
+```
+### c. Žaidimo taisyklės:
+   | CHERRY | = $2 
+   | CHERRY | CHERRY | = $5
+   | CHERRY | CHERRY | CHERRY | = $7
+   | ORANGE | ORANGE | ORANGE arba BAR | = $10
+   |  PLUM  |  PLUM  |  PLUM arba BAR  | = $14
+   |  LEMON |  LEMON |  LEMON arba BAR | = $14
+   |  BELL  |  BELL  |  BELL arba BAR  | = $20
+   |   BAR  |   BAR  |   BAR  | = $250
+   |  SEVEN |  SEVEN |  SEVEN | = $500
+
+## Struktūros analizė
+
+### a. Paaiškinkite, kaip programa apima (įgyvendina) funkcinius reikalavimus.
+- **4 OOP kolonos:**
+
+- 
+
+
+
+
+
+## 1. Polimorfizmas
 Polymorphism is present in several places where objects of different classes can be used interchangeably:
 
 class Game:
@@ -17,7 +65,7 @@ class HighStakes_SlotMachine(Regular_SlotMachine):
             winnings += 50 * bet_multiplier
         return winnings
 
-## 2. Abstraction
+## 2. Abstrakcija
 Abstraction is implemented through the base SlotMachine class and its methods:
 
 class SlotMachine:
@@ -30,7 +78,7 @@ class SlotMachine:
         # ...winning combinations logic...
         return winnings * bet_multiplier
 
-3. Inheritance
+3. Paveldėjimas
 Inheritance is demonstrated through the class hierarchy:
 
 class Regular_SlotMachine(SlotMachine):
@@ -43,57 +91,27 @@ class HighStakes_SlotMachine(Regular_SlotMachine):
     def __init__(self, initial_balance, symbols):
         super().__init__(initial_balance, symbols)
 
-4. Encapsulation
-Encapsulation is implemented using private variables and protected methods:
+4. Inkapsuliacija
+Inkapsuliacija yra iterpta naudojant privačius kintamuosius (du apatiniai brūkšniai) ir apsaugotus metodus (vienas apatinis brūkšnys):
 
-class Wheel:
+`class Wheel:
     def __init__(self, symbols):
-        self.__symbols = symbols        # Private variable
-        self.__current_symbol = None    # Private variable
+        self.__symbols = symbols        # Privatus kintamasis
+        self.__current_symbol = None    # Privatus kintamasis
 
 class Regular_SlotMachine(SlotMachine):
     def __init__(self, initial_balance, symbols):
-        self.__balance = initial_balance    # Private variable
-        self.__wheel1 = Wheel(symbols)      # Private variable
+        self.__balance = initial_balance    # Privatus kintamasis
+        self.__wheel1 = Wheel(symbols)      # Privatus kintamasis
         
     def _display_outcome(self, first, second, third, win):
-        # Protected method (single underscore)
+        # Apsaugotas metodas
         if win > 0:
-            print(f"{first}\t{second}\t{third} -- YOU WIN \033[92m${win}\033[0m")
+            print(f"{first}\t{second}\t{third} -- YOU WIN \033[92m${win}\033[0m")`
 
-## ////////////////////////////////////////////////////////////////////////////////////////////////////////////
-# Kortų žaidimas "Karas"
+# ////////////////////////////////////////////////////////////////////////////////////////////////////////////
 
-## Įvadas
 
-### a. Kokia tai programa?
-
-Tai skaitmeninė klasikinio kortų žaidimo „Karas“ versija. Du žaidėjai (du žmonės arba vienas žmogus ir kompiuteris) žaidžia su sumaišyta standartine 52 kortų kalade. Kiekviename raunde abu žaidėjai traukia po kortą – laimi 
-aukštesnė korta. Lygiųjų atveju prasideda „karas“, kurio metu traukiamos papildomos kortos, kad būtų nustatytas nugalėtojas. Žaidimas tęsiasi tol, kol išnaudojama kaladė, o žaidėjas, laimintis daugiausiai raundų, 
-paskelbiamas nugalėtoju.
-
-### b. Kaip paleisti programą?
-
-1. Įrašykite kodą į failą, pvz., `WAR.py`.
-
-2. Terminale arba komandų eilutėje paleiskite šį scenarijų:
-```
-python WAR.py
-```
-3. Vykdykite nurodymus, kad įvestumėte žaidėjų vardus ir pasirinktumėte, ar žaisti prieš kompiuterį.
-
-Norėdami paleisti unit testus:
-```
-python WAR.py test
-```
-
-### c. Kaip naudoti programą?
-
-Paleidus žaidimą, jūsų bus paprašyta įvesti vardus ir nurodyti, ar norite žaisti prieš kompiuterį.
-- Norėdami žaisti raundą, paspauskite bet kurį klavišą (išskyrus „q“).
-- Norėdami anksčiau išeiti iš žaidimo, bet kuriuo metu paspauskite „q“.
-- Programa registruoja kiekvieną raundą ir rodo rezultatą.
-- Rezultatai išsaugomi faile `game_results.txt`, pagal tuos rezultatus rodo paskutinius tris laimėtojus.
 
 ## Struktūros analizė
 
