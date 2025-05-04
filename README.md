@@ -44,7 +44,7 @@ python SlotMachine.py test
 
 ### a. Paaiškinkite, kaip programa apima (įgyvendina) funkcinius reikalavimus (4 OOP kolonos).
   
--### Polimorfizmas
+- ### Polimorfizmas
 **Polimorfizmas yra pastebimas keliose vietose kur skirtingų klasių objektai gali būti naudojami pakaitomis:**
 
 ```py
@@ -62,7 +62,7 @@ class HighStakes_SlotMachine(Regular_SlotMachine):
         return winnings
 ```
 
--## Abstrakcija
+- ### Abstrakcija
 **Abstrakcija yra įterpta per pagrindinę SlotMachine klasę ir jos metodus:**
 
 ```py
@@ -77,7 +77,7 @@ class SlotMachine:
         return winnings * bet_multiplier
 ```
 
--## Paveldėjimas
+- ### Paveldėjimas
 **Paveldėjimas yra demonstruojamas per klasės hierarchiją:**
 
 ```py
@@ -92,7 +92,7 @@ class HighStakes_SlotMachine(Regular_SlotMachine):
         super().__init__(initial_balance, symbols)
 ```
 
--## Inkapsuliacija
+- ### Inkapsuliacija
 **Inkapsuliacija yra iterpta naudojant privačius kintamuosius (du apatiniai brūkšniai) ir apsaugotus metodus (vienas apatinis brūkšnys):**
 
 ```py
