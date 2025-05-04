@@ -1,3 +1,6 @@
+import unittest
+from unittest.mock import patch
+import io
 import random
 
 class Wheel:
@@ -136,3 +139,113 @@ high_stakes_game = Game(factory.create_slot_machine("high_stakes", 250, symbols)
 
 #regular_game.start()
 high_stakes_game.start()
+
+class TestWheel(unittest.TestCase):
+    def test_spin(self):
+        wheel = Wheel(["A", "B", "C"])
+        result = wheel.spin()
+        self.assertIn(result, ["A", "B", "C"])
+
+    def test_get_current_symbol(self):
+        wheel = Wheel(["A", "B", "C"])
+        wheel.spin()
+        result = wheel.get_current_symbol()
+        self.assertIn(result, ["A", "B", "C"])
+
+class TestSlotMachine(unittest.TestCase):
+    def setUp(self):
+        self.symbols = ["CHERRY", "LEMON", "ORANGE", "PLUM", "BELL", "BAR", "SEVEN"]
+        self.slot_machine = SlotMachine(self.symbols)
+
+    def test_calculate_winnings(self):
+        self.assertEqual(self.slot_machine._calculate_winnings("CHERRY", "LEMON", "ORANGE", 1), 2)
+        self.assertEqual(self.slot_machine._calculate_winnings("CHERRY", "CHERRY", "ORANGE", 1), 5)
+        self.assertEqual(self.slot_machine._calculate_winnings("CHERRY", "CHERRY", "CHERRY", 1), 7)
+        self.assertEqual(self.slot_machine._calculate_winnings("ORANGE", "ORANGE", "ORANGE", 1), 10)
+        self.assertEqual(self.slot_machine._calculate_winnings("ORANGE", "ORANGE", "BAR", 1), 10)
+        self.assertEqual(self.slot_machine._calculate_winnings("PLUM", "PLUM", "PLUM", 1), 14)
+        self.assertEqual(self.slot_machine._calculate_winnings("PLUM", "PLUM", "BAR", 1), 14)
+        self.assertEqual(self.slot_machine._calculate_winnings("LEMON", "LEMON", "LEMON", 1), 14)
+        self.assertEqual(self.slot_machine._calculate_winnings("LEMON", "LEMON", "BAR", 1), 14)
+        self.assertEqual(self.slot_machine._calculate_winnings("BELL", "BELL", "BELL", 1), 20)
+        self.assertEqual(self.slot_machine._calculate_winnings("BELL", "BELL", "BAR", 1), 20)
+        self.assertEqual(self.slot_machine._calculate_winnings("BAR", "BAR", "BAR", 1), 250)
+        self.assertEqual(self.slot_machine._calculate_winnings("SEVEN", "SEVEN", "SEVEN", 1), 500)
+        self.assertEqual(self.slot_machine._calculate_winnings("LEMON", "ORANGE", "PLUM", 1), -1)
+        self.assertEqual(self.slot_machine._calculate_winnings("CHERRY", "LEMON", "ORANGE", 5), 10)
+        
+class TestRegularSlotMachine(unittest.TestCase):
+    def setUp(self):
+        self.symbols = ["CHERRY", "LEMON", "ORANGE"]
+        self.initial_balance = 100
+        self.slot_machine = Regular_SlotMachine(self.initial_balance, self.symbols)
+
+    @patch('random.choice')
+    def test_play_round_winning(self, mock_choice):
+        mock_choice.side_effect = ["CHERRY", "CHERRY", "CHERRY"]
+        bet_multiplier = 1
+        self.slot_machine.play_round(bet_multiplier)
+        self.assertEqual(self.slot_machine.get_balance(), self.initial_balance + 7 * bet_multiplier)
+
+    @patch('random.choice')
+    def test_play_round_losing(self, mock_choice):
+        # Changed to a combination that ensures a loss
+        mock_choice.side_effect = ["LEMON", "ORANGE", "CHERRY"]  
+        bet_multiplier = 1
+        self.slot_machine.play_round(bet_multiplier)
+        # For a losing combination, winnings = -1 * bet_multiplier
+        expected_balance = self.initial_balance - bet_multiplier
+        self.assertEqual(self.slot_machine.get_balance(), expected_balance)
+
+    @patch('sys.stdout', new_callable=io.StringIO)
+    def test_play_round_invalid_bet(self, mock_stdout):
+        bet_multiplier = 0
+        result = self.slot_machine.play_round(bet_multiplier)
+        self.assertFalse(result)
+        self.assertEqual(mock_stdout.getvalue().strip(), "Bet multiplier must be greater than 0.")
+
+    def test_get_balance(self):
+        self.assertEqual(self.slot_machine.get_balance(), self.initial_balance)
+
+class TestHighStakesSlotMachine(unittest.TestCase):
+    def setUp(self):
+        self.symbols = ["CHERRY", "LEMON", "ORANGE", "BAR", "SEVEN"]
+        self.initial_balance = 200
+        self.slot_machine = HighStakes_SlotMachine(self.initial_balance, self.symbols)
+
+    @patch('random.choice')
+    def test_calculate_winnings_high_stakes_bonus(self, mock_choice):
+        mock_choice.side_effect = ["BAR", "SEVEN", "ORANGE"]
+        bet_multiplier = 1
+        self.slot_machine.play_round(bet_multiplier)
+        # Base winnings (-1) plus high stakes bonus (50)
+        expected_balance = self.initial_balance + (50 - 1) * bet_multiplier
+        self.assertEqual(self.slot_machine.get_balance(), expected_balance)
+    
+    @patch('sys.stdout', new_callable=io.StringIO)
+    def test_big_win_message(self, mock_stdout):
+        with patch.object(HighStakes_SlotMachine, '_calculate_winnings', return_value=100):
+            self.slot_machine._display_outcome("BAR", "SEVEN", "ORANGE", 100)
+            self.assertIn("BIG WIN!", mock_stdout.getvalue())
+
+class TestSlotMachineFactory(unittest.TestCase):
+    def setUp(self):
+        self.symbols = ["CHERRY", "LEMON", "ORANGE"]
+        self.factory = SlotMachineFactory()
+
+    def test_create_regular_slot_machine(self):
+        slot_machine = self.factory.create_slot_machine("regular", 100, self.symbols)
+        self.assertIsInstance(slot_machine, Regular_SlotMachine)
+        self.assertEqual(slot_machine.get_balance(), 100)
+
+    def test_create_high_stakes_slot_machine(self):
+        slot_machine = self.factory.create_slot_machine("high_stakes", 200, self.symbols)
+        self.assertIsInstance(slot_machine, HighStakes_SlotMachine)
+        self.assertEqual(slot_machine.get_balance(), 200)
+
+    def test_create_invalid_slot_machine(self):
+        with self.assertRaises(ValueError):
+            self.factory.create_slot_machine("invalid", 100, self.symbols)
+
+if __name__ == '__main__':
+    unittest.main()
