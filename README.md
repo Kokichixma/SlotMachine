@@ -28,15 +28,15 @@ Norėdami paleisti unit testus:
 python SlotMachine.py test
 ```
 ### c. Žaidimo taisyklės:
-| CHERRY | = $2 
-| CHERRY | CHERRY | = $5
-| CHERRY | CHERRY | CHERRY | = $7
-| ORANGE | ORANGE | ORANGE arba BAR | = $10
-|  PLUM  |  PLUM  |  PLUM arba BAR  | = $14
-|  LEMON |  LEMON |  LEMON arba BAR | = $14
-|  BELL  |  BELL  |  BELL arba BAR  | = $20
-|   BAR  |   BAR  |   BAR  | = $250
-|  SEVEN |  SEVEN |  SEVEN | = $500
+``| CHERRY | = $2`` 
+``| CHERRY | CHERRY | = $5``
+``| CHERRY | CHERRY | CHERRY | = $7``
+``| ORANGE | ORANGE | ORANGE arba BAR | = $10``
+``|  PLUM  |  PLUM  |  PLUM arba BAR  | = $14``
+``|  LEMON |  LEMON |  LEMON arba BAR | = $14``
+``|  BELL  |  BELL  |  BELL arba BAR  | = $20``
+``|   BAR  |   BAR  |   BAR  | = $250``
+``|  SEVEN |  SEVEN |  SEVEN | = $500``
 
 ## Struktūros analizė
 
