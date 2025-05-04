@@ -42,11 +42,10 @@ python SlotMachine.py test
 
 ## Struktūros analizė
 
-### a. Paaiškinkite, kaip programa apima (įgyvendina) funkcinius reikalavimus.
-- **4 OOP kolonos:**
+### a. Paaiškinkite, kaip programa apima (įgyvendina) funkcinius reikalavimus (4 OOP kolonos).
   
 - Polimorfizmas
-  Polimorfizmas yra pastebimas keliose vietose kur skirtingų klasių objektai gali būti naudojami pakaitomis:
+`Polimorfizmas yra pastebimas keliose vietose kur skirtingų klasių objektai gali būti naudojami pakaitomis:`
 
 ```py
 class Game:
@@ -64,7 +63,7 @@ class HighStakes_SlotMachine(Regular_SlotMachine):
 ```
 
 - Abstrakcija
-Abstrakcija yra įterpta per pagrindinę SlotMachine klasę ir jos metodus:
+`Abstrakcija yra įterpta per pagrindinę SlotMachine klasę ir jos metodus:`
 
 ```py
 class SlotMachine:
@@ -79,7 +78,7 @@ class SlotMachine:
 ```
 
 - Paveldėjimas
-Paveldėjimas yra demonstruojamas per klasės hierarchiją:
+`Paveldėjimas yra demonstruojamas per klasės hierarchiją:`
 
 ```py
 class Regular_SlotMachine(SlotMachine):
@@ -94,7 +93,7 @@ class HighStakes_SlotMachine(Regular_SlotMachine):
 ```
 
 - Inkapsuliacija
-Inkapsuliacija yra iterpta naudojant privačius kintamuosius (du apatiniai brūkšniai) ir apsaugotus metodus (vienas apatinis brūkšnys):
+`Inkapsuliacija yra iterpta naudojant privačius kintamuosius (du apatiniai brūkšniai) ir apsaugotus metodus (vienas apatinis brūkšnys):`
 
 ```py
 class Wheel:
