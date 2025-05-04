@@ -112,6 +112,27 @@ class Regular_SlotMachine(SlotMachine):
             print(f"{first}\t{second}\t{third} -- YOU WIN \033[92m${win}\033[0m")
 ```
 
+- ### Gamyklos metodo modelis
+**Tai yra įterpta `SlotMachineFactory` klasėje:**
+
+```py
+  class SlotMachineFactory:
+    def create_slot_machine(self, type, initial_balance, symbols):
+        if type == "regular":
+            return Regular_SlotMachine(initial_balance, symbols)
+        elif type == "high_stakes":
+            return HighStakes_SlotMachine(initial_balance, symbols)
+        else:
+            raise ValueError("Invalid slot machine type")
+```
+**Panaudotas, nes:**
+```
+- Tai apima objekto kūrimo logiką
+- Jis sukuria įvairių tipų lošimo automatus pagal įvesties parametrą
+- Tai leidžia lengvai išplėsti, jei reikia pridėti naujų tipų lošimo automatų
+- Kliento kodas (žaidimo klasė) veikia su produktais per bendrą sąsają
+```
+
 # ////////////////////////////////////////////////////////////////////////////////////////////////////////////
 
 
