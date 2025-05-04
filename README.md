@@ -44,8 +44,8 @@ python SlotMachine.py test
 
 ### a. Paaiškinkite, kaip programa apima (įgyvendina) funkcinius reikalavimus (4 OOP kolonos).
   
-- Polimorfizmas
-`Polimorfizmas yra pastebimas keliose vietose kur skirtingų klasių objektai gali būti naudojami pakaitomis:`
+### Polimorfizmas
+**Polimorfizmas yra pastebimas keliose vietose kur skirtingų klasių objektai gali būti naudojami pakaitomis:**
 
 ```py
 class Game:
