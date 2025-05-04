@@ -45,7 +45,7 @@ python SlotMachine.py test
 ### 1. Paaiškinkite, kaip programa apima (įgyvendina) funkcinius reikalavimus (4 OOP kolonos).
   
 - ### Polimorfizmas
-**Polimorfizmas yra pastebimas keliose vietose kur skirtingų klasių objektai gali būti naudojami pakaitomis:**
+**Polimorfizmas (tai principas, leidžiantis naudoti tą patį metodų pavadinimą skirtingose klasėse, tačiau su skirtingu elgesiu) yra pastebimas keliose vietose kur skirtingų klasių objektai gali būti naudojami pakaitomis:**
 
 ```py
 class Game:
@@ -63,7 +63,7 @@ class HighStakes_SlotMachine(Regular_SlotMachine):
 ```
 
 - ### Abstrakcija
-**Abstrakcija yra įterpta per pagrindinę SlotMachine klasę ir jos metodus:**
+**Abstrakcija (tai principas, kuris leidžia slėpti sudėtingą klasės veikimo logiką ir pateikti tik esminę informaciją, reikalingą objektui naudoti) yra įterpta per pagrindinę `SlotMachine` klasę ir jos metodus:**
 
 ```py
 class SlotMachine:
@@ -78,7 +78,7 @@ class SlotMachine:
 ```
 
 - ### Paveldėjimas
-**Paveldėjimas yra demonstruojamas per klasės hierarchiją:**
+**Paveldėjimas (tai principas, leidžiantis vienai klasei perimti kitos klasės savybes (kintamuosius) ir elgseną (metodus)) yra demonstruojamas per klasės hierarchiją:**
 
 ```py
 class Regular_SlotMachine(SlotMachine):
@@ -93,7 +93,7 @@ class HighStakes_SlotMachine(Regular_SlotMachine):
 ```
 
 - ### Inkapsuliacija
-**Inkapsuliacija yra iterpta naudojant privačius kintamuosius (du apatiniai brūkšniai) ir apsaugotus metodus (vienas apatinis brūkšnys):**
+**Inkapsuliacija (tai principas, kuris reiškia duomenų (kintamųjų) ir su jais susijusių veiksmų (metodų) apjungimą į vieną vienetą – klasę, bei apsaugą nuo tiesioginės prieigos iš išorės) yra iterpta naudojant privačius kintamuosius (du apatiniai brūkšniai) ir apsaugotus metodus (vienas apatinis brūkšnys):**
 
 ```py
 class Wheel:
@@ -140,148 +140,147 @@ regular_game = Game(factory.create_slot_machine("regular", 150, symbols))
 high_stakes_game = Game(factory.create_slot_machine("high_stakes", 250, symbols))
 ```
 
+- ### Kompozicija
+**1. Kompozicija yra pastebima `Regular_SlotMachine` klasėje**
+
+```py
+class Regular_SlotMachine(SlotMachine):
+    def __init__(self, initial_balance, symbols):
+        super().__init__(symbols)
+        self.__wheel1 = Wheel(symbols)  # Kompozicija
+        self.__wheel2 = Wheel(symbols)  # Kompozicija
+        self.__wheel3 = Wheel(symbols)  # Kompozicija
+```
+**2. Kompozicija yra pastebima `Game` klasėje**
+
+```py
+class Game:
+    def __init__(self, slot_machine):
+        self.slot_machine = slot_machine  # Kompozicija
+```
+
+- Dalys `Wheel` sukuriamos esančioje klasėje
+- Dalys negali egzistuoti atskirai
+- Dalys yra priklausomos nuo automato likimo
+
+**Žaidimo mechanika:** Klasė `Game` tvarko pagrindinę logiką.
+
+**Unit test:** „unittest“ modulis apžvelgia pagrindinę logiką bei patikrina ar viskas veikia taip kaip turi veikti.
+
+```py
+class TestWheel(unittest.TestCase):
+    def test_spin(self):
+        wheel = Wheel(["A", "B", "C"])
+        result = wheel.spin()
+        self.assertIn(result, ["A", "B", "C"])
+
+    def test_get_current_symbol(self):
+        wheel = Wheel(["A", "B", "C"])
+        wheel.spin()
+        result = wheel.get_current_symbol()
+        self.assertIn(result, ["A", "B", "C"])
+
+class TestSlotMachine(unittest.TestCase):
+    def setUp(self):
+        self.symbols = ["CHERRY", "LEMON", "ORANGE", "PLUM", "BELL", "BAR", "SEVEN"]
+        self.slot_machine = SlotMachine(self.symbols)
+
+    def test_calculate_winnings(self):
+        self.assertEqual(self.slot_machine._calculate_winnings("CHERRY", "LEMON", "ORANGE", 1), 2)
+        self.assertEqual(self.slot_machine._calculate_winnings("CHERRY", "CHERRY", "ORANGE", 1), 5)
+        self.assertEqual(self.slot_machine._calculate_winnings("CHERRY", "CHERRY", "CHERRY", 1), 7)
+        self.assertEqual(self.slot_machine._calculate_winnings("ORANGE", "ORANGE", "ORANGE", 1), 10)
+        self.assertEqual(self.slot_machine._calculate_winnings("ORANGE", "ORANGE", "BAR", 1), 10)
+        self.assertEqual(self.slot_machine._calculate_winnings("PLUM", "PLUM", "PLUM", 1), 14)
+        self.assertEqual(self.slot_machine._calculate_winnings("PLUM", "PLUM", "BAR", 1), 14)
+        self.assertEqual(self.slot_machine._calculate_winnings("LEMON", "LEMON", "LEMON", 1), 14)
+        self.assertEqual(self.slot_machine._calculate_winnings("LEMON", "LEMON", "BAR", 1), 14)
+        self.assertEqual(self.slot_machine._calculate_winnings("BELL", "BELL", "BELL", 1), 20)
+        self.assertEqual(self.slot_machine._calculate_winnings("BELL", "BELL", "BAR", 1), 20)
+        self.assertEqual(self.slot_machine._calculate_winnings("BAR", "BAR", "BAR", 1), 250)
+        self.assertEqual(self.slot_machine._calculate_winnings("SEVEN", "SEVEN", "SEVEN", 1), 500)
+        self.assertEqual(self.slot_machine._calculate_winnings("LEMON", "ORANGE", "PLUM", 1), -1)
+        self.assertEqual(self.slot_machine._calculate_winnings("CHERRY", "LEMON", "ORANGE", 5), 10)
+        
+class TestRegularSlotMachine(unittest.TestCase):
+    def setUp(self):
+        self.symbols = ["CHERRY", "LEMON", "ORANGE"]
+        self.initial_balance = 100
+        self.slot_machine = Regular_SlotMachine(self.initial_balance, self.symbols)
+
+    @patch('random.choice')
+    def test_play_round_winning(self, mock_choice):
+        mock_choice.side_effect = ["CHERRY", "CHERRY", "CHERRY"]
+        bet_multiplier = 1
+        self.slot_machine.play_round(bet_multiplier)
+        self.assertEqual(self.slot_machine.get_balance(), self.initial_balance + 7 * bet_multiplier)
+
+    @patch('random.choice')
+    def test_play_round_losing(self, mock_choice):
+        # Changed to a combination that ensures a loss
+        mock_choice.side_effect = ["LEMON", "ORANGE", "CHERRY"]  
+        bet_multiplier = 1
+        self.slot_machine.play_round(bet_multiplier)
+        # For a losing combination, winnings = -1 * bet_multiplier
+        expected_balance = self.initial_balance - bet_multiplier
+        self.assertEqual(self.slot_machine.get_balance(), expected_balance)
+
+    @patch('sys.stdout', new_callable=io.StringIO)
+    def test_play_round_invalid_bet(self, mock_stdout):
+        bet_multiplier = 0
+        result = self.slot_machine.play_round(bet_multiplier)
+        self.assertFalse(result)
+        self.assertEqual(mock_stdout.getvalue().strip(), "Bet multiplier must be greater than 0.")
+
+    def test_get_balance(self):
+        self.assertEqual(self.slot_machine.get_balance(), self.initial_balance)
+
+class TestHighStakesSlotMachine(unittest.TestCase):
+    def setUp(self):
+        self.symbols = ["CHERRY", "LEMON", "ORANGE", "BAR", "SEVEN"]
+        self.initial_balance = 200
+        self.slot_machine = HighStakes_SlotMachine(self.initial_balance, self.symbols)
+
+    @patch('random.choice')
+    def test_calculate_winnings_high_stakes_bonus(self, mock_choice):
+        mock_choice.side_effect = ["BAR", "SEVEN", "ORANGE"]
+        bet_multiplier = 1
+        self.slot_machine.play_round(bet_multiplier)
+        # Base winnings (-1) plus high stakes bonus (50)
+        expected_balance = self.initial_balance + (50 - 1) * bet_multiplier
+        self.assertEqual(self.slot_machine.get_balance(), expected_balance)
+    
+    @patch('sys.stdout', new_callable=io.StringIO)
+    def test_big_win_message(self, mock_stdout):
+        with patch.object(HighStakes_SlotMachine, '_calculate_winnings', return_value=100):
+            self.slot_machine._display_outcome("BAR", "SEVEN", "ORANGE", 100)
+            self.assertIn("BIG WIN!", mock_stdout.getvalue())
+
+class TestSlotMachineFactory(unittest.TestCase):
+    def setUp(self):
+        self.symbols = ["CHERRY", "LEMON", "ORANGE"]
+        self.factory = SlotMachineFactory()
+
+    def test_create_regular_slot_machine(self):
+        slot_machine = self.factory.create_slot_machine("regular", 100, self.symbols)
+        self.assertIsInstance(slot_machine, Regular_SlotMachine)
+        self.assertEqual(slot_machine.get_balance(), 100)
+
+    def test_create_high_stakes_slot_machine(self):
+        slot_machine = self.factory.create_slot_machine("high_stakes", 200, self.symbols)
+        self.assertIsInstance(slot_machine, HighStakes_SlotMachine)
+        self.assertEqual(slot_machine.get_balance(), 200)
+
+    def test_create_invalid_slot_machine(self):
+        with self.assertRaises(ValueError):
+            self.factory.create_slot_machine("invalid", 100, self.symbols)
+
+if __name__ == '__main__':
+    unittest.main()
+```
+
 # ////////////////////////////////////////////////////////////////////////////////////////////////////////////
 
-
-
-## Struktūros analizė
-
-### 1. Paaiškinkite, kaip programa apima (įgyvendina) funkcinius reikalavimus.
-- **4 OOP kolonos:**
-- Klasės `Card`, `Deck`, `Player` ir `Game` visos naudoja inkapsuliaciją(apibūdina duomenų ir metodų, kurie dirba su duomenimis, sujungimą viename vienete.).
-```py
-class Card:
-    suits = CardFactory.suits
-    values = CardFactory.values
-
-    def __init__(self, value, suit):
-        self.value = value
-        self.suit = suit
-
-    def __lt__(self, other):
-        return self.value < other.value
-
-    def __gt__(self, other):
-        return self.value > other.value
-
-    def __eq__(self, other):
-        return self.value == other.value
-
-    def __repr__(self):
-        return f"{self.values[self.value]} of {self.suits[self.suit]}"
- ```
-- Abstrakcija(principas, kurio esmė – paslėpti klasės ar funkcijos vidines įgyvendinimo detales, o vartotojui parodyti tik esmines funkcijas.) yra `CardFactory` klasėje.
- ```py
-class CardFactory:
-    suits = ["spades", "hearts", "diamonds", "clubs"]
-    values = [None, None, "2", "3", "4", "5", "6", "7", "8", "9", "10", "Jack", "Queen", "King", "Ace"]
-
-    @classmethod
-    def create_card(cls, value, suit):
-        return Card(value, suit)
- ```
-- Paveldėjimas( leidžia kurti naujas klases (poklasius), kurios paveldi savybes ir elgseną iš esamų klasių (superklasių). Tai skatina pakartotinį kodo naudojimą ir padeda užmegzti ryšius tarp klasių.) yra naudojamas Klasėje `Player`, jis turi subklasę `ComputerPlayer`.
-```py
-class Player:
-    def __init__(self, name):
-        self.wins = 0
-        self.card = None
-        self.name = name
-
-    def __str__(self):
-        return self.name
-
-class ComputerPlayer(Player):
-    def __init__(self):
-        super().__init__("Computer")
-
-```
-- Polymorfizmas(programavimo koncepcija, leidžianti metodui atlikti skirtingas užduotis, priklausomai nuo objekto, su kuriuo jis dirba, net jei objektai yra skirtingų tipų.) naudojamas `Card` klasėje `__lt__` ir `__gt__` operatoriuose.
-```py
- def __lt__(self, other):
-        return self.value < other.value
-
-    def __gt__(self, other):
-        return self.value > other.value
-```
-- **Kompozicija:** `Game` klasė turi `Deck` ir `Players`, o `Deck` klasė turi `Card` objektus.
-```py
-class Deck:
-    def __init__(self):
-        self.cards = [CardFactory.create_card(value, suit) for value in range(2, 15) for suit in range(4)]
-```
-- **Kortų kaladės kūrimas:** `Deck` klasė, naudodama "Factory" design patern, sukuria 52 kortų kaladę ir ją sumaišo.
-```py
-class CardFactory:
-    suits = ["spades", "hearts", "diamonds", "clubs"]
-    values = [None, None, "2", "3", "4", "5", "6", "7", "8", "9", "10", "Jack", "Queen", "King", "Ace"]
-```
-- **Kortų palyginimai:** Klasė `Card` įgyvendina `__lt__` ir `__gt__`, kad palygintų kortelių vertes.
-```py
-    def __lt__(self, other):
-        return self.value < other.value
-
-    def __gt__(self, other):
-        return self.value > other.value
-
-    def __eq__(self, other):
-        return self.value == other.value
-```
-- **Žaidimo mechanika:** Klasė `Game` tvarko pagrindinę logiką, įskaitant raundo eigą, rezultatų stebėjimą ir nugalėtojo nustatymą.
-- **Karo logika:** Įdiegta realistiška karo mechanika – kiekvienam karo scenarijui traukiamos trys užverstos kortos ir viena užversta.
-```py
- def war(self, table_cards):
-        if len(self.deck.cards) < 8:
-            self.logger("Not enough cards to continue war. Ending war.")
-            return
-
-        self.logger("Each player places three cards face down and one face up.")
-
-        for _ in range(3):
-            table_cards.append(self.deck.remove_card()) 
-            table_cards.append(self.deck.remove_card()) 
-
-        p1_war_card = self.deck.remove_card()
-        p2_war_card = self.deck.remove_card()
-        table_cards.extend([p1_war_card, p2_war_card])
-        self.draw(self.p1.name, p1_war_card, self.p2.name, p2_war_card)
-
-        if p1_war_card > p2_war_card:
-            self.p1.wins += 1
-            self.logger(f"{self.p1.name} wins the war and takes {len(table_cards)} cards.")
-        elif p2_war_card > p1_war_card:
-            self.p2.wins += 1
-            self.logger(f"{self.p2.name} wins the war and takes {len(table_cards)} cards.")
-        else:
-            self.logger("WAR again!")
-            self.war(table_cards)
-```
-- **Žaidėjo sąveika:** Palaiko žmonių tarpusavio arba žmonių ir kompiuterio žaidimus su dinamine įvestimi.
-- **Pastovumas:** Žaidimo rezultatai registruojami byloje, kad būtų galima juos saugoti.
-- **Unit test:** „unittest“ modulis apžvelgia pagrindinę logiką: kortų palyginimą, kaladės dydį ir nugalėtojo nustatymą.
-
-```py
-class TestCard(unittest.TestCase):
-    def test_card_comparison(self):
-        c1 = Card(10, 2) 
-        c2 = Card(11, 1) 
-        self.assertTrue(c2 > c1)
-        self.assertFalse(c1 > c2)
-        self.assertTrue(c1 == Card(10, 0)) 
-
-    def test_deck_size(self):
-        deck = Deck()
-        self.assertEqual(len(deck.cards), 52)
-
-    def test_winner_determination(self):
-        game = Game(name1="Mykolas", name2="Simonas", use_computer=False, logger=lambda *args: None)
-        game.p1.wins = 3
-        game.p2.wins = 1
-        self.assertEqual(game.determine_winner(), "Mykolas")
-        game.p1.wins = 2
-        game.p2.wins = 2
-        self.assertEqual(game.determine_winner(), "It was a tie!")
-```
 ## Rezultatai ir santrauka
 
 ### a. Rezultatai
