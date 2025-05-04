@@ -4,7 +4,8 @@
 
 ### 1. Kokia tai programa?
 
-Tai yra konsolinis lošimo automato "Slot Machine" žaidimas. Žaidimo pradžioje žaidėjas pasirenka vieną iš dviejų automatų tipų – Regular arba High Stakes – tiesiog pažymėdamas nenorimą komentaru su simboliu `#`. Veikimo principas grindžiamas atsitiktinumo generavimu ir tam tikra struktūrizuota lošimo logika. Žaidėjui yra suteikta galimybė įvesti sumą iš kurios bus lošiama. Sukimo metu būgnai sustos ir bus rodomi atsitiktiniai simboliai. Nepaisant "Slot Machine" pasirinkimo bus 7 simboliai (CHERRY, ORANGE, PLUM, LEMON, BELL, BAR, SEVEN) kurių vertė kyla iš kairės į dešinę, išskyrus vienu atveju, nes PLUM lygus LEMON. Laimėjimai apskaičiuojami remiantis iš anksto numatytais algoritmais. Žaidimas gali būti tęsiamas iki tol kol yra patenkinamos žaidimo sąlygos t.y. netikrų skaitmeninių pinigų. P.s. Žaidimas neskatina lošimo, bandymai rodė, kad žaidėjas nebus linkęs laimėti.
+Tai yra konsolinis lošimo automato "Slot Machine" žaidimas. Žaidimo pradžioje žaidėjas pasirenka vieną iš dviejų automatų tipų – Regular arba High Stakes – tiesiog pažymėdamas nenorimą komentaru su simboliu `#`. Veikimo principas grindžiamas atsitiktinumo generavimu ir tam tikra struktūrizuota lošimo logika. Žaidėjui yra suteikta galimybė įvesti sumą iš kurios bus lošiama. Sukimo metu būgnai sustos ir bus rodomi atsitiktiniai simboliai. Nepaisant "Slot Machine" pasirinkimo bus 7 simboliai (CHERRY, ORANGE, PLUM, LEMON, BELL, BAR, SEVEN) kurių vertė kyla iš kairės į dešinę, išskyrus vienu atveju, nes PLUM lygus LEMON. Laimėjimai apskaičiuojami remiantis iš anksto numatytais algoritmais. Žaidimas gali būti tęsiamas iki tol kol yra patenkinamos žaidimo sąlygos t.y. netikrų skaitmeninių pinigų. 
+**P.s. Žaidimas neskatina lošimo, bandymai rodė, kad žaidėjas nebus linkęs laimėti.**
 
 ### 2. Kaip paleisti ir naudoti programą?
 
