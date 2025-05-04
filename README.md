@@ -278,35 +278,26 @@ class TestSlotMachineFactory(unittest.TestCase):
 if __name__ == '__main__':
     unittest.main()
 ```
-
-# ////////////////////////////////////////////////////////////////////////////////////////////////////////////
-
 ## Rezultatai ir santrauka
 
-### a. Rezultatai
+### 1. Rezultatai
 
-- Kortų žaidimas „Karas“ buvo sėkmingai įgyvendintas naudojant objektinius principus, tokius kaip kompozicija, todėl kodas tapo lengvai valdomas.
+- Lošimo automatas "Slot Machine" buvo sėkmingai sukurtas pasinaudojant objektiniais principais.
 
-- Programa teisingai tvarko žaidimą tarp dviejų žmonių žaidėjų arba žmogaus ir kompiuterio, turi kortų traukimo, nugalėtojų nustatymo ir rezultatų saugojimo funkcijas.
+- Unit testai padėjo išsiaiškinti problemas, todėl kodas veikia sklandžiai.
 
-- Unit testai patvirtino kortų palyginimo logiką ir nugalėtojo nustatymą, padėdami patvirtinti pagrindinę žaidimo mechaniką.
+### 2. Išvados
 
-- Iššūkių buvo, vienas iš jų tai žaidimo galimybę spresti kraštutinius atvejus kaip kortų pritrūkimas karo metu, vienodų kortų ištraukimo karo mechanikos padarymas.
+- Problemų daug nebuvo, nes yra žaidžiama su konsole, o ne prieš kompiuterį ar tikrus žaidėjus. Buvo kilusi problema su atskirų automatų veikimu ir bėda paskirstant tam tikrą sumą simbolių algoritmams. Šis žaidimas dažniausiai neužtrunka labai ilgai, nebent yra laimima labai didelė pinigų suma kuomet tiesiog galima baigti žaidimą su `n`. 
+- Manau šis kursinis įkvėpė mane užsiimti tokia veikla laisvalaikiu ir tikrai pasistengti padaryti kokybiškesnį, optimalesnį projektą. Beto padėjo pramokti Pythono kalbą.
 
-### b. Išvados
-
-- Pagrindinė dilema kurią turejau atlikdamas šią programą, tai kortų permaišymo mechanika. "Karas" gali būti žaidžiamas ir ne pagal taškus kaip aš padariau, tačiau pagal visas kaladės kortas. Tai reiškia, kad pasibaigus kaladėje kortoms, jau atverstos kortos būtų permaišytos ir karas žaidžiamas toliau, iki kol vienas iš žaidėjų susirinks visą kaladę. Šis žaidimo metodas užtranka tikrai ilgą laiko tarpą, ir paprasta programos demonstracija bei testavimas tikrai užtruktų ilgai ir pasidarytu greitai nuobodu. Iš pradžių nebuvau tvirtas apie pasirinkimą daryti ši žaidima tokiu metodu, tačiau pasiklausęs pažystamų, interneto ir šiaip toliau pasigilinęs į "Karo" istoriją, sužinojau, kad tokį "Karo" variantą irgi žaisdavo.
-- Galų gale visas kodas veikia be nesklandumų, ir manau šis kursinis darbas, tikrai mane motivavo bandyti kurti daugiau projektų ir toliau plėtoti savo python kalbos žinias.
-
-### c. Kaip būtų galima papildyti savo programą?
-- Galima ją vizualizuoti
-- Galima implementuoti pinigų ir lažybų sistemą.
-- Galima padaryti permaišymo mechaniką.
+### 3. Kaip būtų galima patobulinti savo programą?
+- Galima buvo pridėti būdą kaupti bandymų rezultatus "Leaderboard" kada buvo išeita iš žaidimo su didžiausia pinigų suma.
+- Galima buvo pridėti būdą kaupti istorijoje paskutinius 3 ar daugiau bandymų.
+- Galima buvo pridėti profilio sistemą.
+- Galima buvo sukurti GUI.
 
 
 ## Šaltiniai
-- https://docs.python.org/3/library/unittest.html
-- https://refactoring.guru/design-patterns/python
-- https://www.freecodecamp.org/news/python-import-from-file-importing-local-files-in-python/
-- https://www.w3schools.com/python/default.asp
 - https://docs.github.com/en/get-started/start-your-journey/about-github-and-git
+- https://docs.python.org/3/library/unittest.html
