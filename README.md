@@ -2,11 +2,11 @@
 
 ## Įvadas
 
-### 1. Kokia tai programa?
+# 1. ### Kokia tai programa?
 
 Tai yra konsolinis lošimo automato "Slot Machine" žaidimas. Žaidimo pradžioje žaidėjas pasirenka vieną iš dviejų automatų tipų – Regular arba High Stakes – tiesiog pažymėdamas nenorimą komentaru su simboliu `#`. Veikimo principas grindžiamas atsitiktinumo generavimu ir tam tikra struktūrizuota lošimo logika. Žaidėjui yra suteikta galimybė įvesti sumą iš kurios bus lošiama. Sukimo metu būgnai sustos ir bus rodomi atsitiktiniai simboliai. Nepaisant "Slot Machine" pasirinkimo bus 7 simboliai (CHERRY, ORANGE, PLUM, LEMON, BELL, BAR, SEVEN) kurių vertė kyla iš kairės į dešinę, išskyrus vienu atveju, nes PLUM lygus LEMON. Laimėjimai apskaičiuojami remiantis iš anksto numatytais algoritmais. Žaidimas gali būti tęsiamas iki tol kol yra patenkinamos žaidimo sąlygos t.y. netikrų skaitmeninių pinigų. P.s. Žaidimas neskatina lošimo, bandymai rodė, kad žaidėjas nebus linkęs laimėti.
 
-### 2. Kaip paleisti ir naudoti programą?
+# 2. ### Kaip paleisti ir naudoti programą?
 
 1. Pasirinkite automato tipą:
    Regular Slot Machine (galima įvesties vertė nuo 1 iki 50).
@@ -27,7 +27,7 @@ Norėdami paleisti unit testus:
 ```
 python SlotMachine.py test
 ```
-### 3. Žaidimo taisyklės:
+# 3. ### Žaidimo taisyklės:
 ```
 | CHERRY | = $2
 | CHERRY | CHERRY | = $5
@@ -42,7 +42,7 @@ python SlotMachine.py test
 
 ## Struktūros analizė
 
-### a. Paaiškinkite, kaip programa apima (įgyvendina) funkcinius reikalavimus (4 OOP kolonos).
+# 1. ### Paaiškinkite, kaip programa apima (įgyvendina) funkcinius reikalavimus (4 OOP kolonos).
   
 - ### Polimorfizmas
 **Polimorfizmas yra pastebimas keliose vietose kur skirtingų klasių objektai gali būti naudojami pakaitomis:**
@@ -126,11 +126,18 @@ class Regular_SlotMachine(SlotMachine):
             raise ValueError("Invalid slot machine type")
 ```
 **Panaudotas, nes:**
-```
+**
 - Tai apima objekto kūrimo logiką
 - Jis sukuria įvairių tipų lošimo automatus pagal įvesties parametrą
 - Tai leidžia lengvai išplėsti, jei reikia pridėti naujų tipų lošimo automatų
 - Kliento kodas (žaidimo klasė) veikia su produktais per bendrą sąsają
+**
+**Panaudojimo pavyzdys kode:**
+
+```py
+factory = SlotMachineFactory()
+regular_game = Game(factory.create_slot_machine("regular", 150, symbols))
+high_stakes_game = Game(factory.create_slot_machine("high_stakes", 250, symbols))
 ```
 
 # ////////////////////////////////////////////////////////////////////////////////////////////////////////////
@@ -139,7 +146,7 @@ class Regular_SlotMachine(SlotMachine):
 
 ## Struktūros analizė
 
-### a. Paaiškinkite, kaip programa apima (įgyvendina) funkcinius reikalavimus.
+### 1. Paaiškinkite, kaip programa apima (įgyvendina) funkcinius reikalavimus.
 - **4 OOP kolonos:**
 - Klasės `Card`, `Deck`, `Player` ir `Game` visos naudoja inkapsuliaciją(apibūdina duomenų ir metodų, kurie dirba su duomenimis, sujungimą viename vienete.).
 ```py
