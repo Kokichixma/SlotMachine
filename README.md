@@ -45,26 +45,27 @@ python SlotMachine.py test
 ### a. Paaiškinkite, kaip programa apima (įgyvendina) funkcinius reikalavimus.
 - **4 OOP kolonos:**
   
-- 1. Polimorfizmas
-Polymorphism is present in several places where objects of different classes can be used interchangeably:
+- Polimorfizmas
+  Polimorfizmas yra pastebimas keliose vietose kur skirtingų klasių objektai gali būti naudojami pakaitomis:
 
 ```py
 class Game:
     def __init__(self, slot_machine):
-        # Polymorphic - accepts any type of slot machine
+        # Polimorfiškas - priima bet kokį automatą
         self.slot_machine = slot_machine
 
 class HighStakes_SlotMachine(Regular_SlotMachine):
     def _calculate_winnings(self, first, second, third, bet_multiplier):
-        # Method overriding - polymorphic behavior
+        # Metodo perrašymas - Polimorfizmo sąvybė
         winnings = super()._calculate_winnings(first, second, third, bet_multiplier)
         if first == "BAR" and (second == "SEVEN" or third == "SEVEN"):
             winnings += 50 * bet_multiplier
         return winnings
 ```
 
-- 2. Abstrakcija
-Abstraction is implemented through the base SlotMachine class and its methods:
+- Abstrakcija
+Abstrakcija yra įterpta per pagrindinę SlotMachine klasę ir jos metodus:
+
 ```py
 class SlotMachine:
     def __init__(self, symbols):
@@ -76,8 +77,9 @@ class SlotMachine:
         # ...winning combinations logic...
         return winnings * bet_multiplier
 ```
-- 3. Paveldėjimas
-Inheritance is demonstrated through the class hierarchy:
+
+- Paveldėjimas
+Paveldėjimas yra demonstruojamas per klasės hierarchiją:
 
 ```py
 class Regular_SlotMachine(SlotMachine):
@@ -91,7 +93,7 @@ class HighStakes_SlotMachine(Regular_SlotMachine):
         super().__init__(initial_balance, symbols)
 ```
 
-- 4. Inkapsuliacija
+- Inkapsuliacija
 Inkapsuliacija yra iterpta naudojant privačius kintamuosius (du apatiniai brūkšniai) ir apsaugotus metodus (vienas apatinis brūkšnys):
 
 ```py
