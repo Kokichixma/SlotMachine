@@ -28,30 +28,26 @@ Norėdami paleisti unit testus:
 python SlotMachine.py test
 ```
 ### c. Žaidimo taisyklės:
-``| CHERRY | = $2`` 
-``| CHERRY | CHERRY | = $5``
-``| CHERRY | CHERRY | CHERRY | = $7``
-``| ORANGE | ORANGE | ORANGE arba BAR | = $10``
-``|  PLUM  |  PLUM  |  PLUM arba BAR  | = $14``
-``|  LEMON |  LEMON |  LEMON arba BAR | = $14``
-``|  BELL  |  BELL  |  BELL arba BAR  | = $20``
-``|   BAR  |   BAR  |   BAR  | = $250``
-``|  SEVEN |  SEVEN |  SEVEN | = $500``
+```
+| CHERRY | = $2
+| CHERRY | CHERRY | = $5
+| CHERRY | CHERRY | CHERRY | = $7
+| ORANGE | ORANGE | ORANGE arba BAR | = $10
+|  PLUM  |  PLUM  |  PLUM arba BAR  | = $14
+|  LEMON |  LEMON |  LEMON arba BAR | = $14
+|  BELL  |  BELL  |  BELL arba BAR  | = $20
+|   BAR  |   BAR  |   BAR  | = $250
+|  SEVEN |  SEVEN |  SEVEN | = $500
+```
 
 ## Struktūros analizė
 
 ### a. Paaiškinkite, kaip programa apima (įgyvendina) funkcinius reikalavimus.
 - **4 OOP kolonos:**
-
-- 
-
-
-
-
-
-## 1. Polimorfizmas
+  
+- 1. Polimorfizmas
 Polymorphism is present in several places where objects of different classes can be used interchangeably:
-
+```
 class Game:
     def __init__(self, slot_machine):
         # Polymorphic - accepts any type of slot machine
@@ -64,10 +60,10 @@ class HighStakes_SlotMachine(Regular_SlotMachine):
         if first == "BAR" and (second == "SEVEN" or third == "SEVEN"):
             winnings += 50 * bet_multiplier
         return winnings
-
-## 2. Abstrakcija
+```
+- 2. Abstrakcija
 Abstraction is implemented through the base SlotMachine class and its methods:
-
+```
 class SlotMachine:
     def __init__(self, symbols):
         self._symbols = symbols
@@ -77,10 +73,10 @@ class SlotMachine:
         winnings = 0
         # ...winning combinations logic...
         return winnings * bet_multiplier
-
-3. Paveldėjimas
+```
+- 3. Paveldėjimas
 Inheritance is demonstrated through the class hierarchy:
-
+```
 class Regular_SlotMachine(SlotMachine):
     # Inherits from SlotMachine
     def __init__(self, initial_balance, symbols):
@@ -90,11 +86,11 @@ class HighStakes_SlotMachine(Regular_SlotMachine):
     # Inherits from Regular_SlotMachine
     def __init__(self, initial_balance, symbols):
         super().__init__(initial_balance, symbols)
-
-4. Inkapsuliacija
+```
+- 4. Inkapsuliacija
 Inkapsuliacija yra iterpta naudojant privačius kintamuosius (du apatiniai brūkšniai) ir apsaugotus metodus (vienas apatinis brūkšnys):
-
-`class Wheel:
+```
+class Wheel:
     def __init__(self, symbols):
         self.__symbols = symbols        # Privatus kintamasis
         self.__current_symbol = None    # Privatus kintamasis
@@ -107,8 +103,8 @@ class Regular_SlotMachine(SlotMachine):
     def _display_outcome(self, first, second, third, win):
         # Apsaugotas metodas
         if win > 0:
-            print(f"{first}\t{second}\t{third} -- YOU WIN \033[92m${win}\033[0m")`
-
+            print(f"{first}\t{second}\t{third} -- YOU WIN \033[92m${win}\033[0m")
+```
 # ////////////////////////////////////////////////////////////////////////////////////////////////////////////
 
 
