@@ -2,11 +2,11 @@
 
 ## Įvadas
 
-### a. Kokia tai programa?
+### 1. Kokia tai programa?
 
 Tai yra konsolinis lošimo automato "Slot Machine" žaidimas. Žaidimo pradžioje žaidėjas pasirenka vieną iš dviejų automatų tipų – Regular arba High Stakes – tiesiog pažymėdamas nenorimą komentaru su simboliu `#`. Veikimo principas grindžiamas atsitiktinumo generavimu ir tam tikra struktūrizuota lošimo logika. Žaidėjui yra suteikta galimybė įvesti sumą iš kurios bus lošiama. Sukimo metu būgnai sustos ir bus rodomi atsitiktiniai simboliai. Nepaisant "Slot Machine" pasirinkimo bus 7 simboliai (CHERRY, ORANGE, PLUM, LEMON, BELL, BAR, SEVEN) kurių vertė kyla iš kairės į dešinę, išskyrus vienu atveju, nes PLUM lygus LEMON. Laimėjimai apskaičiuojami remiantis iš anksto numatytais algoritmais. Žaidimas gali būti tęsiamas iki tol kol yra patenkinamos žaidimo sąlygos t.y. netikrų skaitmeninių pinigų. P.s. Žaidimas neskatina lošimo, bandymai rodė, kad žaidėjas nebus linkęs laimėti.
 
-### b. Kaip paleisti ir naudoti programą?
+### 2. Kaip paleisti ir naudoti programą?
 
 1. Pasirinkite automato tipą:
    Regular Slot Machine (galima įvesties vertė nuo 1 iki 50).
@@ -20,14 +20,14 @@ Tai yra konsolinis lošimo automato "Slot Machine" žaidimas. Žaidimo pradžioj
 python SlotMachine.py
 ```
 4. Vykdykite nurodymus:
-   Įveskite `y/n` priklausomai ar norite žaisti.
-   Įvedę `y` įrašykite sumą iš kurios bus lošiama.
+   **Įveskite `y/n` priklausomai ar norite žaisti.**
+   **Įvedę `y` įrašykite sumą iš kurios bus lošiama.**
 
 Norėdami paleisti unit testus:
 ```
 python SlotMachine.py test
 ```
-### c. Žaidimo taisyklės:
+### 3. Žaidimo taisyklės:
 ```
 | CHERRY | = $2
 | CHERRY | CHERRY | = $5
@@ -44,7 +44,7 @@ python SlotMachine.py test
 
 ### a. Paaiškinkite, kaip programa apima (įgyvendina) funkcinius reikalavimus (4 OOP kolonos).
   
-### Polimorfizmas
+-### Polimorfizmas
 **Polimorfizmas yra pastebimas keliose vietose kur skirtingų klasių objektai gali būti naudojami pakaitomis:**
 
 ```py
@@ -62,8 +62,8 @@ class HighStakes_SlotMachine(Regular_SlotMachine):
         return winnings
 ```
 
-- Abstrakcija
-`Abstrakcija yra įterpta per pagrindinę SlotMachine klasę ir jos metodus:`
+-## Abstrakcija
+**Abstrakcija yra įterpta per pagrindinę SlotMachine klasę ir jos metodus:**
 
 ```py
 class SlotMachine:
@@ -71,29 +71,29 @@ class SlotMachine:
         self._symbols = symbols
 
     def _calculate_winnings(self, first, second, third, bet_multiplier):
-        # Abstract logic for calculating winnings
+        # Abstrakti logika laimėjimų apskaičiavimui
         winnings = 0
-        # ...winning combinations logic...
+        # ...laimėjimo kombinacijos logika...
         return winnings * bet_multiplier
 ```
 
-- Paveldėjimas
-`Paveldėjimas yra demonstruojamas per klasės hierarchiją:`
+-## Paveldėjimas
+**Paveldėjimas yra demonstruojamas per klasės hierarchiją:**
 
 ```py
 class Regular_SlotMachine(SlotMachine):
-    # Inherits from SlotMachine
+    # Paveldi iš SlotMachine
     def __init__(self, initial_balance, symbols):
         super().__init__(symbols)
 
 class HighStakes_SlotMachine(Regular_SlotMachine):
-    # Inherits from Regular_SlotMachine
+    # Paveldi iš Regular_SlotMachine
     def __init__(self, initial_balance, symbols):
         super().__init__(initial_balance, symbols)
 ```
 
-- Inkapsuliacija
-`Inkapsuliacija yra iterpta naudojant privačius kintamuosius (du apatiniai brūkšniai) ir apsaugotus metodus (vienas apatinis brūkšnys):`
+-## Inkapsuliacija
+**Inkapsuliacija yra iterpta naudojant privačius kintamuosius (du apatiniai brūkšniai) ir apsaugotus metodus (vienas apatinis brūkšnys):**
 
 ```py
 class Wheel:
